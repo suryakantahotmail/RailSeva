@@ -72,8 +72,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
         session.send(JSON.stringify(args));
     session.send("User Data:/n" + session.userData);
     session.send("Conversation Data:/n" + session.conversationData);
-    session.say("Hello... I am speaking");
-
+    session.say("Hello... I am speaking", "Hello there");
 /*    for(var temp in session)
         session.send(temp);
 
