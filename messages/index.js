@@ -70,9 +70,8 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 //getRailName_no
 .matches('getRailName_No', (session, args) => {
         session.send(JSON.stringify(args));
-    session.send("User Data:/n" + session.userData);
-    session.send("Conversation Data:/n" + session.conversationData);
-    session.say("Hello... I am speaking", "Hello there");
+        session.send(session.entities.entity.text);
+        session.send(session.entities.type.text);
 /*    for(var temp in session)
         session.send(temp);
 
