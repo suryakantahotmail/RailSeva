@@ -68,12 +68,12 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 //getRailName_no
 .matches('getRailName_No', (session, args) => {
-    session.send("args contents------------------------------------");
-    for(var temp in args)
-        session.send(temp);
+        session.send(args);
     session.send("session contents------------------------------------");
-    for(var temp in session)
+/*    for(var temp in session)
         session.send(temp);
+
+*/
 })
 //getTime
 .matches('getTime', (session, args) => {
