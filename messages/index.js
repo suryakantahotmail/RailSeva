@@ -60,15 +60,17 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     session.send('Hello...!!! ');
     if (now < '120000' && now >= '40000')
         session.send("Good Morning");
-    elseif(now <= '170000' && now >= '120000')
+    if(now <= '170000' && now >= '120000')
         session.send("Good Afternoon");
-    elseif(now <= '220000' && now > '170000')
+    if(now <= '220000' && now > '170000')
         session.send("Good evening");
     session.send('How may I help you?');
 })
 //getRailName_no
 .matches('getRailName_No', (session, args) => {
-    session.send(session.message);
+    session.send(session);
+    foreach(temp in session)
+        session.send(temp);
 })
 //getTime
 .matches('getTime', (session, args) => {
