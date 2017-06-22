@@ -65,11 +65,15 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     if(now <= '220000' && now > '170000')
         session.send("Good evening");
     session.send('How may I help you?');
+    session.sendTyping("Hello Again...How may I help you?");
 })
 //getRailName_no
 .matches('getRailName_No', (session, args) => {
-        session.send(args);
-    session.send("session contents------------------------------------");
+        session.send(JSON.stringify(args));
+    session.send("User Data:/n" + session.userData);
+    session.send("Conversation Data:/n" + session.conversationData);
+    session.say("Hello... I am speaking");
+
 /*    for(var temp in session)
         session.send(temp);
 
