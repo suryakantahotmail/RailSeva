@@ -16,6 +16,7 @@ console.log("Current date(YYYYMMDD):" + today);
 var now = new Date();
 now = date.format(now, 'HHmmss');   //HH-Hours-24   mm-Minutes      ss-seconds 
 console.log("Current time(HHmmss):" + now);
+
 //Railway-API Logic
 var railway = require("railway-api");
 var rail_api_key = '9dkmoce4';
@@ -55,10 +56,11 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     session.send('This query is related to me. But I will not allow you to access my privacy');
 })
 //Greetings
+
 .matches('Greetings', (session, args) => {
     var greet;
     session.send('Hello...!!! ');
-    if (now < '120000' && now >= '40000')
+    if (now < '120000' && now >= '040000')
         session.send("Good Morning");
     if(now <= '170000' && now >= '120000')
         session.send("Good Afternoon");
