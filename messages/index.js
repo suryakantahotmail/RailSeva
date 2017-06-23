@@ -19,7 +19,7 @@ console.log("Current time(HHmmss):" + now);
 
 //Railway-API Logic
 var railway = require("railway-api");
-var rail_api_key = '9dkmoce4';
+railway.setApikey('9dkmoce4');
 
 
 var useEmulator = (process.env.NODE_ENV == 'development');
@@ -70,10 +70,46 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 //getRailName_no
 .matches('getRailName_No', (session, args) => {
-    session.send('ARGS data');
-    session.send(JSON.stringify(args));
-    session.send('Session Data');
-    session.send(JSON.stringify(session));
+    var from, to, curr_station, source_station, dest_station, invalid_dest, fast_flag;
+    curr_station = 'SC';
+    var msg1 = session.message.text.replace(/[^a-zA-Z ]/g, "");     //get the user inputted text without any special character
+    var msg_arr = msg1.match(/\S+/gi);		//convert the message into array
+    for(var i=0;i<msg_arr.length;i++){
+        if(msg_arr[i] == 'from'){
+            from = msg_arr[i+1];            //get from station
+        }
+        if(msg_arr[i] == 'to'){
+            to = msg_arr[i+1];              //get destination station
+            if(to == undefined)
+                to = "";
+        }
+        if(msg_arr[i].indexOf('fast') >= 0)
+            fast_flag = 'X';                //User query is to get the fastest train
+    }
+    if(from == "")
+        from = curr_station;
+    if(to == "" || to == undefined)
+        invalid_dest = 'X';
+    
+    if(invalid_dest == 'X'){
+        session.send('I think you forget to mention the destination station... Please try again');
+    }
+    if(fast_flag == 'X'){
+        var railName_No = getFastestTrain(from, to);
+    }
+    if(from != "" && to != ""){
+        railway.trainBetweenStations(from, to, function (err, res) {
+            if(res.response_code == 200){
+                session.send("I found " + res.total + " trains which are available to go from " + from + " to " + to);
+				for(var i=0;i< res.total;i++){
+					session.send(i + '. ' + res.train[i].number + ", " + res.train[i].name + ", Travel Time: " + res.train[i].travel_time + 'Hrs');
+				}
+			}else{
+                session.send("No trains available from "+ from + "to " + to);
+            }
+        });
+    }
+
 })
 //getTime
 .matches('getTime', (session, args) => {
@@ -98,3 +134,6 @@ if (useEmulator) {
     module.exports = { default: connector.listen() }
 }
 
+function getFastestTrain(from, to){
+
+}
