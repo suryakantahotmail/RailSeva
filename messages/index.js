@@ -58,7 +58,8 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 //Greetings
 
 .matches('Greetings', (session, args) => {
-    var greet;
+    now = new Date();
+    now = date.format(now, 'HHmmss');   //HH-Hours-24   mm-Minutes      ss-seconds 
     session.send('Hello...!!! ');
     if (now < '120000' && now >= '040000')
         session.send("Good Morning");
@@ -121,7 +122,11 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 //getTime
 .matches('getTime', (session, args) => {
     if(session.message.text.indexOf("departure")>= 0){
+
         session.send("Departure time is 22:10");
+    }
+    if(session.messahe.text.indexOf("arrival")>= 0){
+        session.send("Arrival time 23:50");
     }
 })
 //
