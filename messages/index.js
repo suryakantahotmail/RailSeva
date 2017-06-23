@@ -67,17 +67,13 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     if(now <= '220000' && now > '170000')
         session.send("Good evening");
     session.send('How may I help you?');
-    session.sendTyping("Hello Again...How may I help you?");
 })
 //getRailName_no
 .matches('getRailName_No', (session, args) => {
-        session.send(JSON.stringify(args));
-        session.send(session.entities.entity.text);
-        session.send(session.entities.type.text);
-/*    for(var temp in session)
-        session.send(temp);
-
-*/
+    session.send('ARGS data');
+    session.send(JSON.stringify(args));
+    session.send('Session Data');
+    session.send(JSON.stringify(session));
 })
 //getTime
 .matches('getTime', (session, args) => {
