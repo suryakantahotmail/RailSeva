@@ -122,10 +122,9 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 //getTime
 .matches('getTime', (session, args) => {
     if(session.message.text.indexOf("departure")>= 0){
-
         session.send("Departure time is 22:10");
     }
-    if(session.messahe.text.indexOf("arrival")>= 0){
+    if(session.message.text.indexOf("arrival")>= 0){
         session.send("Arrival time 23:50");
     }
 })
