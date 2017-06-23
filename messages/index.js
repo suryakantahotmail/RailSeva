@@ -12,10 +12,10 @@ var path = require('path');
 var date = require('date-and-time');        //date-and-time API
 var today = new Date();
 today = date.format(today, 'YYYYMMDD');
-console.log("Current date(YYYYMMDD):" + today);
+//console.log("Current date(YYYYMMDD):" + today);
 var now = new Date();
 now = date.format(now, 'HHmmss');   //HH-Hours-24   mm-Minutes      ss-seconds 
-console.log("Current time(HHmmss):" + now);
+//console.log("Current time(HHmmss):" + now);
 
 //Railway-API Logic
 var railway = require("railway-api");
@@ -97,23 +97,32 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     if(fast_flag == 'X'){
         var railName_No = getFastestTrain(from, to);
     }
-    if(from != "" && to != ""){
+    var i;
+    if(from != "" && to != "" && fast_flag != 'X'){
         railway.trainBetweenStations(from, to, function (err, res) {
             if(res.response_code == 200){
                 session.send("I found " + res.total + " trains which are available to go from " + from + " to " + to);
-				for(var i=0;i< res.total;i++){
-					session.send(i + '. ' + res.train[i].number + ", " + res.train[i].name + ", Travel Time: " + res.train[i].travel_time + 'Hrs');
+				for(i=0;i< res.total;i++){
+					session.send(i+1 + '. ' + res.train[i].number + ", " + res.train[i].name + ", Travel Time: " + res.train[i].travel_time + 'Hrs');
 				}
 			}else{
                 session.send("No trains available from "+ from + "to " + to);
             }
         });
     }
+    if(fast_flag == 'X'){
+        session.send("Found one train with travel time " + res.train[0].travel_time + "hrs");
+        session.send("Train Name: " + res.train[0].name + "/nTrain Number: " + res.train[0].number);
+    }
+
+
 
 })
 //getTime
 .matches('getTime', (session, args) => {
-    session.send('get time');
+    if(session.message.text.indexOf("departure")>= 0){
+        session.send("Departure time is 22:10");
+    }
 })
 //
 
@@ -134,6 +143,3 @@ if (useEmulator) {
     module.exports = { default: connector.listen() }
 }
 
-function getFastestTrain(from, to){
-
-}
